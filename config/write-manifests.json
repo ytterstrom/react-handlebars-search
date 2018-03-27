@@ -1,3 +1,6 @@
 {
-  "cdnBasePath": "<!-- PATH TO CDN -->"
+//   "cdnBasePath": "https://publiccdn.sharepointonline.com/elofhanssonab.sharepoint.com/10540078cd1bf2abc0fc5679bd75793818450fa06d30eebb7cb853f350c9afc219caebee/"
+
+  //"cdnBasePath": "https://elofhanssonab.sharepoint.com/ClientSideAssets/React Search Handler"
+  "cdnBasePath":  "<!-- PATH TO CDN -->"
 }

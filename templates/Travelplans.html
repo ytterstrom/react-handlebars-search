@@ -1,0 +1,223 @@
+<content id="metadata" type="x-handlebars-metadata">
+    { "fields": ["Path", "TravelerOWSUSER", "Title","TravelfromOWSTEXT", "DestinationOWSTEXT","RefinableDate01", "RefinableDate02","CreatedOWSDATE", "ParentLink"],
+    "query": "", "sort": "" }
+
+
+</content>
+<!-- https://elofhanssonab.sharepoint.com/Lists/Travelplans/EditForm.aspx?ID=1&Source=%2FLists%2FTravelplans -->
+<content id="template1" type="x-handlebars-template">
+
+
+</content>
+<content type="x-handlebars-template" class="template">
+        <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"> </script>
+   
+</content>
+
+<script id="template" type="x-handlebars-template" class="template">
+    
+        
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" >
+
+    <style>
+        .CanvasSection-xl4 .hidden-xs{
+
+
+            display:none;
+        }
+        .CanvasSection-xl4 .visible-xs {
+            display:block!important;
+        } 
+       tr {
+        cursor:pointer;
+       }
+            .gly-rotate-90 {
+                filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+                -webkit-transform: rotate(45deg);
+                -moz-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                -o-transform: rotate(45deg);
+                transform: rotate(45deg);
+              }
+        .avatars {
+            height: 32px
+        }
+
+        html[dir='ltr'] .avatars {
+            margin-left: -2px
+        }
+
+        html[dir='rtl'] .avatars {
+            margin-right: -2px
+        }
+
+        .avatar {
+            display: inline-block;
+            vertical-align: top;
+            position: relative;
+            text-align: center;
+            width: 32px;
+            height: 32px
+        }
+
+        .avatar:after {
+            content: '';
+            position: absolute;
+            left: -1px;
+            top: -1px;
+            right: -1px;
+            bottom: -1px;
+            border: 2px solid #fafafa;
+            border-radius: 50%
+        }
+
+        .image_a {
+            display: block;
+            opacity: 0
+        }
+
+        .image_a.imageIsLoaded {
+            opacity: 1
+        }
+
+        .image_b {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            -webkit-perspective: 1px;
+            perspective: 1px
+        }
+
+        [dir='ltr'] .image_b {
+            margin-right: 10px
+        }
+
+        [dir='rtl'] .image_b {
+            margin-left: 10px
+        }
+
+        [dir='ltr'] .image_b {
+            left: 0
+        }
+
+        [dir='rtl'] .image_b {
+            right: 0
+        }
+
+        .image_b[src=""] {
+            display: none
+        }
+
+        .imageArea {
+            position: relative;
+            text-align: center;
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
+            height: 48px;
+            width: 48px
+        }
+
+        .imageArea .image_b {
+            border: 0px
+        }
+
+        .imageIsCenter,
+        .imageIsContain,
+        .imageIsCover {
+            position: relative;
+
+        }
+
+        .imageIsContain.imageIsPortrait {
+            height: 100%;
+            width: auto
+        }
+
+        .imageIsCover.imageIsPortrait {
+            width: 100%;
+            height: auto
+        }
+        .add-new-travelplan {
+
+        color:rgb(51, 51, 51);
+        font-size: 14px;
+
+        }
+        .glyphicon {
+            color: #002F6C;
+        }
+    </style>
+
+    <a href='https://elofhanssonab.sharepoint.com/lists/travelplans'><h1 class="ms-font-xl ms-fontColor-black" style="padding-bottom:8px;">{{wpTitle}} <span class="glyphicon glyphicon-plane gly-rotate-90"></span> </h1></a>
+    <a class="add-new-travelplan" href="https://elofhanssonab.sharepoint.com/Lists/Travelplans/NewForm.aspx"><span class="glyphicon glyphicon-plus"></span> Add new travelplan</a>
+   
+    <div>
+        <div class="table-responsive">
+            <table class="table table-striped table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>Traveler</th>
+                        <th class="hidden-xs">From</th>
+                        <th class="hidden-xs">To</th>
+                        <th>Leave</th>
+                        <th>Return</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                        {{#each items}}
+                        
+                    <tr OnClick="window.location.href='{{Path}}'" >
+                        <td>
+                            <div class="ms-DocumentCardActivity-avatars avatars">
+                                <div class="ms-DocumentCardActivity-avatar avatar">
+                                    <div role="persentation" size="11" class="ms-Persona-coin ms-Persona--size32 rootIsSize32">
+                                        <div class="ms-Persona-imageArea imageArea">
+                                            <div class="ms-Image root_a ms-Persona-image image_b" style="width: 32px; height: 32px;">
+                                                <img class="ms-Image-image image_b ms-Image-image--portrait imageIsPortrait ms-Image-image--cover imageIsCover is-loaded imageIsLoaded is-fadeIn css-87"
+                                                    src="/_layouts/15/userphoto.aspx?size=S&amp;accountname={{splitSPUser TravelerOWSUSER 'email'}}"
+                                                    alt="">
+                                            </div>
+                                            
+                                            
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <span style="float: left;margin-top: -30px;margin-left: 34px;">
+                                    {{splitSPUser TravelerOWSUSER 'displayName'}}
+                                </span>
+                                <span class="visible-xs">
+                                <b>From:</b> {{TravelfromOWSTEXT}}
+                                <br/>
+                                <b>To:</b> {{DestinationOWSTEXT}}
+                                <span>
+                                    
+                        </td>
+                       <td class="hidden-xs">{{TravelfromOWSTEXT}}</td>
+                       <td class="hidden-xs">{{DestinationOWSTEXT}}</td>
+                        <td style="white-space:nowrap;">{{formatDate RefinableDate01 'll'}}
+                            
+                        </td>
+                        <td style="white-space:nowrap;">
+                                {{formatDate RefinableDate02 'll'}}
+                        </td>
+                    </tr>
+                    
+
+                {{/each}}
+                </tbody> 
+            </table>
+        </div>
+    </div>
+   
+</script>

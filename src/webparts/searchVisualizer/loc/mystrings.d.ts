@@ -21,11 +21,17 @@ declare interface ISearchVisualizerStrings {
     PrivateGroupsFieldLabel: string;
     PrivateGroupsFieldLabelOn: string;
     PrivateGroupsFieldLabelOff: string;
+    PersonalizedFieldLabel: string;
+    PersonalizedFieldLabelOn: string;
+    PersonalizedFieldLabelOff: string;
+    PersonalizedPropertyFieldLabel: string;
+    ManagedPropertyFieldLabel: string;
 
     /* Validation */
-    QuertValidationEmpty: string;
+    QueryValidationEmpty: string;
     TemplateValidationEmpty: string;
     TemplateValidationHTML: string;
+    PersonalizedPropertyValidationEmpty:string;
 
     /* Dialog */
     ScriptsDialogHeader: string;

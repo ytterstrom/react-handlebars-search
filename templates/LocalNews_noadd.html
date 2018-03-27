@@ -1,0 +1,332 @@
+<content id="metadata" type="x-handlebars-metadata">
+    { "fields": ["Path", "Description", "Title","AuthorOWSUser", "EditorOWSUSER","CreatedBy", "SiteTitle","SPWebUrl","CreatedOWSDATE",
+    "PictureThumbnailURL", "ListID", "listitemID", "LocationOWSTEXT","SPWeburl"], "query": "", "sort": "" }
+
+</content>
+
+<content id="template" type="x-handlebars-template">
+     
+    <style>
+        .root {
+            -webkit-font-smoothing: antialiased;
+            background-color: #ffffff;
+            border: 1px solid #eaeaea;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            max-width: 320px;
+            min-width: 206px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            position: relative
+        }
+
+        .rootIsActionable_61fb6a4f:hover {
+            cursor: pointer;
+            border-color: #c8c8c8
+        }
+
+        .rootIsActionable_61fb6a4f:hover:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            border: 1px solid #c8c8c8;
+            pointer-events: none
+        }
+
+        .preview {
+            border-bottom: 1px solid #eaeaea;
+            position: relative;
+            background-color: #f8f8f8;
+            overflow: hidden
+        }
+
+        .root_a {
+            overflow: hidden
+        }
+
+
+        .CanvasZone:not(.CanvasZone--fullWidth) .ControlZone {
+            padding: 0;
+        }
+
+        .icon {
+            bottom: 10px;
+            position: absolute
+        }
+
+        [dir='ltr'] .icon {
+            left: 10px
+        }
+
+        [dir='rtl'] .icon {
+            right: 10px
+        }
+
+        .location+.title {
+            padding-top: 4px
+        }
+
+        .location {
+            font-size: 12px;
+            font-weight: 400;
+            color: #333333;
+            display: block;
+            padding: 8px 16px;
+            position: relative;
+            text-decoration: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+
+        .location:hover {
+            color: #002f6c;
+            cursor: pointer
+        }
+
+        .title {
+            padding: 8px 16px;
+            display: block;
+            font-size: 17px;
+            font-weight: 300;
+            color: #333333;
+            height: 38px;
+            line-height: 18px;
+            overflow: hidden;
+            word-wrap: break-word
+        }
+
+        .activity {
+            padding: 8px 16px;
+            position: relative
+        }
+
+        .name,
+        .activityActivity {
+            display: block;
+            font-size: 12px;
+            font-weight: 400;
+            color: #767676;
+            line-height: 15px;
+            height: 15px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+
+        .avatars {
+            height: 32px
+        }
+
+        html[dir='ltr'] .avatars {
+            margin-left: -2px
+        }
+
+        html[dir='rtl'] .avatars {
+            margin-right: -2px
+        }
+
+        .avatar {
+            display: inline-block;
+            vertical-align: top;
+            position: relative;
+            text-align: center;
+            width: 32px;
+            height: 32px
+        }
+
+        .avatar:after {
+            content: '';
+            position: absolute;
+            left: -1px;
+            top: -1px;
+            right: -1px;
+            bottom: -1px;
+            border: 2px solid #fafafa;
+            border-radius: 50%
+        }
+
+        .root.rootIsSize32 {
+            height: 34px;
+            min-width: 34px
+        }
+
+        .rootIsSize32 .imageArea,
+        .rootIsSize32 .image_b {
+            height: 32px;
+            width: 32px
+        }
+
+        .image_a{
+            display:block;
+            opacity:0
+        }
+        .image_a.imageIsLoaded{
+            opacity:1
+        }
+
+        .image_b {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            -webkit-perspective: 1px;
+            perspective: 1px
+        }
+
+        [dir='ltr'] .image_b {
+            margin-right: 10px
+        }
+
+        [dir='rtl'] .image_b {
+            margin-left: 10px
+        }
+
+        [dir='ltr'] .image_b {
+            left: 0
+        }
+
+        [dir='rtl'] .image_b {
+            right: 0
+        }
+
+        .image_b[src=""] {
+            display: none
+        }
+
+        .imageArea {
+            position: relative;
+            text-align: center;
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
+            height: 48px;
+            width: 48px
+        }
+
+        .imageArea .image_b {
+            border: 0px
+        }
+        .imageIsCenter,
+        .imageIsContain,
+        .imageIsCover {
+            position: relative;
+           
+        }
+        .imageIsContain.imageIsPortrait {
+            height: 100%;
+            width: auto
+        }
+
+        .imageIsCover.imageIsPortrait {
+            width: 100%;
+            height: auto
+        }
+
+        
+
+        
+
+        .activityDetails {
+            height: 32px;
+            position: absolute;
+            top: 8px;
+            width: calc(100% - 72px)
+        }
+
+        [dir='ltr'] .activityDetails {
+            left: 56px
+        }
+
+        [dir='rtl'] .activityDetails {
+            right: 56px
+        }
+        .CanvasZone:not(.CanvasZone--fullWidth) .ControlZone {
+            padding: 0;
+        }
+        .ms-List-cell{vertical-align:top;display:inline-block;margin-bottom:20px}
+        .glyphicon {
+            color: #002F6C;
+        }
+    </style>
+
+
+
+
+
+
+    <h1 class="ms-font-xl ms-fontColor-black" style="padding-bottom:8px;">{{wpTitle}}</h1>
+    
+    <div class="cardLayout">
+        <div class="ms-CardList" role="grid" aria-label="List of content, use right and left arrow keys to navigate, arrow down to access details.">
+            <div role="presentation" class="ms-FocusZone" data-focuszone-id="FocusZone30">
+                <div class="ms-Fabric css-64">
+                    <div role="list" class="ms-List">
+                        <div class="ms-List-surface" role="presentation">
+                            <div class="ms-List-page" role="presentation">
+
+                                {{#each items}}
+
+                                <a href="{{Path}}">
+                                    <div role="listitem" class="ms-List-cell" data-list-index="{{@index-1}}" data-automationid="ListCell">
+                                        <div style="width:283px; height: 299px; margin-right: {{evenRow @index}} ">
+                                            <div class="ms-DocumentCardTile" data-is-focusable="true" role="gridcell" aria-label="{{Title}}, {{splitSPUser AuthorOWSUser 'displayName'}},{{formatDate CreatedOWSDATE 'll'}}">
+                                                <div role="presentation" class="ms-FocusZone" data-focuszone-id="FocusZone24">
+                                                    <div tabindex="-1" role="button" class="ms-DocumentCard root ms-DocumentCard--actionable rootIsActionable">
+                                                        <div class="ms-DocumentCardPreview preview">
+                                                            <div>
+                                                                <div class="ms-Image root_a" style="width: 283px;">
+                                                                    <img src="{{PictureThumbnailURL}}" role="presentation" alt="" class="ms-Image-image image_a ms-Image-image--portrait imageIsPortrait is-loaded imageIsLoaded is-fadeIn css-87 ms-Image-image--scaleWidth imageIsScaleWidth">
+                                                                </div>
+                                                                <div class="ms-Image root_a ms-DocumentCardPreview-icon icon">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="has-location ms-DocumentCardTile-titleArea">
+                                                            <a class="ms-DocumentCardLocation location" href="{{SPWebUrl}}" tabindex="-1">{{SiteTitle}}</a>
+                                                            <div class="ms-DocumentCardTitle title" title="{{Title}}">{{Title}}</div>
+                                                        </div>
+                                                        <div class="ms-DocumentCardActivity activity">
+                                                            <div class="ms-DocumentCardActivity-avatars avatars">
+                                                                <div class="ms-DocumentCardActivity-avatar avatar">
+                                                                    <div role="persentation" size="11" class="ms-Persona-coin ms-Persona--size32 rootIsSize32">
+                                                                        <div class="ms-Persona-imageArea imageArea">
+                                                                            <div class="ms-Image root_a ms-Persona-image image_b" style="width: 32px; height: 32px;">
+                                                                                <img class="ms-Image-image image_b ms-Image-image--portrait imageIsPortrait ms-Image-image--cover imageIsCover is-loaded imageIsLoaded is-fadeIn css-87"
+                                                                                    src="/_layouts/15/userphoto.aspx?size=S&amp;accountname={{splitSPUser AuthorOWSUser 'email'}}"
+                                                                                    alt="">
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="ms-DocumentCardActivity-details activityDetails">
+                                                                <span class="ms-DocumentCardActivity-name name">{{splitSPUser AuthorOWSUser 'displayName'}}</span>
+                                                                <span class="ms-DocumentCardActivity-activity activityActivity">Edited {{formatDate CreatedOWSDATE 'll'}}</span>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+</content>

@@ -52,8 +52,9 @@ export default class SearchVisualizer extends React.Component<ISearchVisualizerP
             handlebars: Handlebars
         });
 
-        // Register all custom helpers
+ // Register all custom helpers
         CustomHelpers.init(this.props.context);
+
     }
 
     /**
@@ -81,7 +82,11 @@ export default class SearchVisualizer extends React.Component<ISearchVisualizerP
             prevProps.maxResults !== this.props.maxResults ||
             prevProps.sorting !== this.props.sorting ||
             prevProps.duplicates !== this.props.duplicates ||
-            prevProps.privateGroups !== this.props.privateGroups) {
+            prevProps.privateGroups !== this.props.privateGroups ||
+            prevProps.personalized !== this.props.personalized ||
+            prevProps.personalizedProperty !== this.props.personalizedProperty ||
+            prevProps.managedProperty !== this.props.managedProperty
+        ) {
             this._resetLoadingState();
             // Only refresh the search results
             this._processResults();
@@ -173,10 +178,30 @@ export default class SearchVisualizer extends React.Component<ISearchVisualizerP
     /**
      * Processing the search result retrieval process
      */
-    private _processResults() {
+    private async _processResults() {
+
         const startRow = this._pageNr * this.props.maxResults;
+        let query = this.props.query;
         //  Get the search results and then bind it to the template
-        this._searchService.get(this.props.query, this.props.maxResults, this.props.sorting, this.props.duplicates, this.props.privateGroups, startRow, this._fields).then((searchResp: ISearchResponse) => {
+        if (this.props.personalized) {
+            console.log('Personalized activated');
+            await this._searchService.getUserProperty(this.props.personalizedProperty).then(perquery => {
+
+                if (perquery !== null) {
+
+                   query += ' ' + this.props.managedProperty + ':' + perquery;
+                }
+                else {
+                    console.log('Could not find property: ' + this.props.personalizedProperty);
+                    this.setState({
+                        error: 'Could not find property: ' + this.props.personalizedProperty
+                    });
+                }
+            });
+
+        }
+
+        this._searchService.get(query, this.props.maxResults, this.props.sorting, this.props.duplicates, this.props.privateGroups, this.props.personalized, this.props.personalizedProperty, startRow, this._fields).then((searchResp: ISearchResponse) => {
             // Create the template values object
             const tmplValues: any = {
                 wpTitle: this.props.title,
@@ -323,7 +348,7 @@ export default class SearchVisualizer extends React.Component<ISearchVisualizerP
         }
 
         return (
-            <div id={this._compId} className={`${styles.searchVisualizer} ms-Fabric--v6-0-0`}>
+               <div id={this._compId} className={`${styles.searchVisualizer} ms-Fabric--v6-0-0`}>
                 {view}
 
                 <Dialog isOpen={this.state.showScriptDialog} type={DialogType.normal} onDismiss={this._toggleDialog.bind(this)} title={strings.ScriptsDialogHeader} subText={strings.ScriptsDialogSubText}></Dialog>

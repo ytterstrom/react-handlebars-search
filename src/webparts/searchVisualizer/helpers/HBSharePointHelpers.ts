@@ -1,6 +1,8 @@
+import * as moment from 'moment';
 import * as Handlebars from 'handlebars';
 import { ISPUser, ISPUrl } from './../components/ISearchVisualizerProps';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
+import pnp from "sp-pnp-js";
 
 export default class HBSharePointHelpers {
     constructor(private _context: WebPartContext) {
@@ -8,6 +10,11 @@ export default class HBSharePointHelpers {
         Handlebars.registerHelper('splitSPUser', this._splitSPUser);
         Handlebars.registerHelper('splitSPTaxonomy', this._splitSPTaxonomy);
         Handlebars.registerHelper('splitSPUrl', this._splitSPUrl);
+        Handlebars.registerHelper('formatDate', this._formatDate);
+        Handlebars.registerHelper('returnday', this._returnday);
+        Handlebars.registerHelper('returnMonthName', this._returnMonthName);
+        Handlebars.registerHelper('evenRow', this._evenRow);
+        Handlebars.registerHelper('currentWebUrl', this._currentWebUrl);
     }
 
     /**
@@ -86,4 +93,39 @@ export default class HBSharePointHelpers {
         };
         return spurl[propertyRequested];
     }
+    private _formatDate = (date, format) => {
+        var offset = moment().utcOffset();
+
+        return moment.utc(date).utcOffset(offset).format(format);
+
+    }
+    private _returnMonthName = (date) => {
+
+        var parsedate = new Date(date);
+
+        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        ];
+        var month = monthNames[parsedate.getMonth()];
+
+        return month;
+    }
+    private _returnday = (date) => {
+
+        var parsedate = new Date(date);
+
+        var day = parsedate.getDate();
+
+        return day;
+    }
+    private _evenRow = (rowNumber) => {
+        if (rowNumber % 2 == 0) { return '20px;'; }
+        else { return '0;'; }
+    }
+    private _currentWebUrl = (path) => {
+        let res = window.location.href.substring(0,window.location.href.indexOf("/SitePages/"));
+
+        return res;
+    }
+
 }

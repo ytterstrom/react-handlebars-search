@@ -1,0 +1,141 @@
+<content id="metadata" type="x-handlebars-metadata">
+    { "fields": ["Path", "Description", "ParentLink","Title","EventDateOWSDATE", "EndDateOWSDATE", "ListID", "listitemID", "LocationOWSTEXT","SPWeburl","CategoryOWSCHCS"],
+    "query": "", "sort": "" }
+
+</content>
+
+</content>
+    
+<content id="template" type="x-handlebars-template">
+    <style>
+        .calendar-listing .post {
+            display: table;
+            width: 100%;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e5e5e5;
+            padding-bottom: 20px;
+        }
+
+        .calendar-listing a,
+        a:visited,
+        a:hover,
+        a:active {
+            color: inherit;
+        }
+
+        .calendar-listing .post .date {
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid;
+            border-color: #c8c8c8;
+            box-sizing: border-box;
+            justify-content: center;
+            height: 80px;
+            width: 80px;
+        }
+
+        .calendar-listing .post .date .day {
+            font-size: 28px;
+            font-weight: 600;
+            color: #333333;
+        }
+
+        .calendar-listing .post .date .month {
+            text-transform: uppercase;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .calendar-listing .post .calendar-title {
+            font-size: 17px;
+            font-weight: 300;
+            padding: 6px 0 6px 0;
+        }
+
+        .calendar-listing .post .calendar-description {
+            display: table-cell;
+            vertical-align: top;
+            line-height: 150%;
+            font-size: 14px;
+        }
+
+        .calendar-listing .post .calendar-location {
+            display: table-cell;
+            vertical-align: top;
+            line-height: 100%;
+            font-size: 12px;
+            color: #474747;
+
+        }
+
+        .calendar-listing .post .event {
+            display: table-cell;
+            vertical-align: top;
+            line-height: 150%;
+            font-size: 14px;
+            padding-left: 16px;
+        }
+
+        .calendar-listing .post .event .calendar-description a:after {
+            content: " \203A";
+        }
+    </style>
+
+
+
+    <div>
+        <h1 class="ms-font-xl ms-fontColor-black">{{wpTitle}}</h1>
+
+<div><a class="add-new-event" href="{{currentWebUrl}}/Lists/Events/newform.aspx"><span class="glyphicon glyphicon-plus"></span> Add new event</a></div><br/>
+        {{#each items}}
+                <div class="calendar-listing">
+            <div class="post">
+
+                <a href="{{SPWeburl}}/_layouts/15/Event.aspx?ListGuid={{ListID}}&ItemId={{listitemID}}">
+                    <div class="date">
+                        {{#if EventDateOWSDATE}}
+                        <div class="month"> {{returnMonthName EventDateOWSDATE}} </div>
+                        <div class="day"> {{returnday EventDateOWSDATE}} </div> 
+                        {{currentWebUrl}}
+                        {{else}}
+                        <div class="month"> {{returnMonthName EndDateOWSDATE}} </div>
+                        <div class="day"> {{returnday EndDateOWSDATE}} </div>
+                        
+                        {{/if}}
+                    </div>
+                    <div class="event">
+                        <div class="calendar-location"> {{LocationOWSTEXT}} </div>
+                        <!-- {{CategoryOWSCHCS}} -->
+
+                        <div class="calendar-title">{{Title}}</div>
+                        <div class="calendar-description">
+                            {{Description}}
+
+
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- <a href="{{SPWeburl}}/_layouts/15/Event.aspx?ListGuid={{ListID}}&ItemId={{listitemID}}" class="ms-fontColor-black">{{Title}}
+            <br/>
+            <span>{{EventDateOWSDATE}}</span>
+            <br/>
+            <span>{{CategoryOWSCHCS}}</span>
+            <br/>
+            <span>{{Description}}</span>
+            <br/>
+
+        </a> -->
+        {{/each}}
+    </div>
+
+    </div>
+    <!-- {{#if items.length}}
+    <a id="prevPage" class="" href="javascript:;">Previous</a>
+    <a id="nextPage" class="" href="javascript:;">Next</a>
+    {{/if}} -->
+    </div>
+</content>

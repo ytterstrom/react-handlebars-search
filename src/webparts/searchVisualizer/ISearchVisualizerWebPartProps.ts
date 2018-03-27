@@ -8,4 +8,7 @@ export interface ISearchVisualizerWebPartProps {
     scriptloading: boolean;
     duplicates: boolean;
     privateGroups: boolean;
+    personalized: boolean;
+    personalizedProperty: string;
+    managedProperty: string;
 }

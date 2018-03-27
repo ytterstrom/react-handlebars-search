@@ -1,7 +1,9 @@
 import { ISearchResults, ICells, ICellValue, ISearchResponse } from './ISearchService';
-import { SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http';
+import { SPHttpClient, SPHttpClientConfiguration, SPHttpClientResponse,
+    ISPHttpClientConfiguration } from '@microsoft/sp-http';
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import SearchTokenHelper from "../helpers/SearchTokenHelper";
+import pnp from 'sp-pnp-js';
 
 export default class SearchService {
     private _tokenHelper: SearchTokenHelper;
@@ -19,7 +21,30 @@ export default class SearchService {
      * @param sorting
      * @param fields
      */
-    public get(query: string, maxResults: number, sorting: string, duplicates: boolean, privateGroups: boolean, startRow: number, fields: string[] = []) {
+    public getUserProperty(personalizedProperty: string) {
+        return new Promise<string>((resolve, reject) => {
+
+            pnp.sp.profiles.myProperties.get().then(d => {
+
+                let propValue:string =null;
+                let props = d.UserProfileProperties;
+
+                props.forEach(prop => {
+                    console.log(prop.Value);
+                    if (prop.Key == personalizedProperty) {
+
+                        console.log(prop.Value);
+                        propValue = prop.Value;
+                        resolve(propValue);
+
+                    }
+                });
+                resolve(propValue);
+            }).catch((error: string) => reject(error));
+        });
+    }
+    public get(query: string, maxResults: number, sorting: string, duplicates: boolean, privateGroups: boolean, personalized: boolean, personalizedProperty: string, startRow: number, fields: string[] = []) {
+
         return new Promise<ISearchResponse>((resolve, reject) => {
             let totalResults: number = null;
             let totalRowsIncludingDuplicates: number = null;
@@ -27,6 +52,7 @@ export default class SearchService {
             let url: string = this._context.pageContext.web.absoluteUrl + "/_api/search/query?querytext=";
             // Check if a query is provided
             url += !this._isEmptyString(query) ? `'${this._tokenHelper.replaceTokens(query)}'` : "'*'";
+
             // Check if there are fields provided
             if (!this._isEmptyString(fields.join(','))) {
                 url += `&selectproperties='${fields}'`;

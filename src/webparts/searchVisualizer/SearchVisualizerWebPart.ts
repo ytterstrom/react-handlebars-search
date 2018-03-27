@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
+import pnp from "sp-pnp-js";
 import {
     BaseClientSideWebPart,
     IPropertyPaneConfiguration,
@@ -16,13 +17,14 @@ import { ISearchVisualizerWebPartProps } from './ISearchVisualizerWebPartProps';
 import { SPComponentLoader } from '@microsoft/sp-loader';
 
 export default class SearchVisualizerWebPart extends BaseClientSideWebPart<ISearchVisualizerWebPartProps> {
-
+    private personalizedPropertyDisabled: boolean = true;
+    private managedPropertyDisabled: boolean = true;
     constructor() {
-      super();
+        super();
 
-      // Load the core UI Fabric styles
-      SPComponentLoader.loadCss('https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/6.0.0/css/fabric-6.0.0.scoped.min.css');
-    }
+        // Load the core UI Fabric styles
+        SPComponentLoader.loadCss('https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/6.0.0/css/fabric-6.0.0.scoped.min.css');
+      }
 
     public render(): void {
         const element: React.ReactElement<ISearchVisualizerProps> = React.createElement(
@@ -37,13 +39,23 @@ export default class SearchVisualizerWebPart extends BaseClientSideWebPart<ISear
                 scriptloading: this.properties.scriptloading,
                 duplicates: this.properties.duplicates,
                 privateGroups: this.properties.privateGroups,
+                personalized: this.properties.personalized,
+                personalizedProperty: this.properties.personalizedProperty,
+                managedProperty: this.properties.managedProperty,
                 context: this.context
             }
         );
 
         ReactDom.render(element, this.domElement);
     }
+    protected onInit(): Promise<void> {
 
+        return super.onInit().then(_ => {
+          pnp.setup({
+            spfxContext: this.context
+          });
+        });
+      }
     protected get dataVersion(): Version {
         return Version.parse('1.0');
     }
@@ -83,6 +95,21 @@ export default class SearchVisualizerWebPart extends BaseClientSideWebPart<ISear
                                     label: strings.PrivateGroupsFieldLabel,
                                     onText: strings.PrivateGroupsFieldLabelOn,
                                     offText: strings.PrivateGroupsFieldLabelOff
+                                }),
+                                PropertyPaneToggle('personalized', {
+                                    label: strings.PersonalizedFieldLabel,
+                                    onText: strings.PersonalizedFieldLabelOn,
+                                    offText: strings.PersonalizedFieldLabelOff
+                                }),
+                                PropertyPaneTextField('personalizedProperty', {
+                                    label: strings.PersonalizedPropertyFieldLabel,
+                                    disabled: this.personalizedPropertyDisabled
+
+                                }),
+                                PropertyPaneTextField('managedProperty', {
+                                    label: strings.ManagedPropertyFieldLabel,
+                                    disabled: this.managedPropertyDisabled
+
                                 })
                             ],
                             isCollapsed: true
@@ -125,10 +152,16 @@ export default class SearchVisualizerWebPart extends BaseClientSideWebPart<ISear
     private _queryValidation(value: string): string {
         // Check if a URL is specified
         if (value.trim() === "") {
-            return strings.QuertValidationEmpty;
+            return strings.QueryValidationEmpty;
         }
 
         return '';
+    }
+    private _personalizedPropertyValidation(value: string):string {
+        debugger;
+        if (value.trim() === "" && this.properties.personalized ===true) {
+            return strings.PersonalizedPropertyValidationEmpty;
+        }
     }
 
     /**
@@ -157,5 +190,18 @@ export default class SearchVisualizerWebPart extends BaseClientSideWebPart<ISear
 	 */
     protected get disableReactivePropertyChanges(): boolean {
         return true;
+    }
+    protected onPropertyPaneConfigurationStart(): void {
+
+        this.personalizedPropertyDisabled = !this.properties.personalized;
+        this.managedPropertyDisabled = !this.properties.personalized;
+    }
+    protected onPropertyPaneFieldChanged(propertyPath: string, oldValue: any, newValue: any): void {
+
+        if(propertyPath==="personalized"  ){
+
+            this.personalizedPropertyDisabled =!newValue;
+            this.managedPropertyDisabled = !newValue;
+        }
     }
 }
