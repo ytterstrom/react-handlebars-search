@@ -1,8 +1,9 @@
-# Search Result Visualizer web part created with React and Handlebars templates
+This is an extension of the work previously done by [Elio Struyf](https://github.com/estruyf/react-handlebars-search). It has been extended by Thomas Ytterström, Consid AB to personalize the search result based on user properties matching managed properties.
+
+
 
 This web part is created to allow you to visualize search results by using custom Handlebars templates. Originally this web part made use of a React template system, but by switching the system to use Handlebars instead it became a lot easier to create custom templates.
 
-> If you are interested in the original project, feel free to explore the code over here: [Search WP SPFx](https://github.com/estruyf/Search-WP-SPFx).
 
 The idea of this web part is to mimic the functionality of the `Content Search Web Part` and its `display templates` approach.
 
@@ -17,6 +18,10 @@ The idea of this web part is to mimic the functionality of the `Content Search W
     - `npm install`
     - `gulp serve --nobrowser`
     - Open your hosted workbench and start exploring the web part
+
+- Update write-manifests.json with the location to the deploymentcdn
+- If you update gulpfile-xxxx with settings (i.e xxxx) you can use the gulp command "gulp upload-to-sharepoint --ship" to automatically upload the script to cdn, "gulp upload-app-package --ship" to upload the app and "gulp deploy-app-package --ship" to deploy the app
+
 
 ## Using the web part
 
@@ -60,6 +65,12 @@ Specify if you want to trim duplicate results.
 ### Search through data from private groups
 
 Specify if you want to search through the data of private Office 365 Group sites.
+
+> By default this option is disabled.
+
+### Personalize search result based on user property
+
+Specify if you want to personalize the result. Select user profile property and the managed propety it should match
 
 > By default this option is disabled.
 
