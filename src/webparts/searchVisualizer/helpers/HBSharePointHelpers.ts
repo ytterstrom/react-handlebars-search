@@ -1,10 +1,12 @@
 import * as moment from 'moment';
 import * as Handlebars from 'handlebars';
+import * as $ from 'jquery';
 import { ISPUser, ISPUrl } from './../components/ISearchVisualizerProps';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 import pnp from "sp-pnp-js";
 
 export default class HBSharePointHelpers {
+
     constructor(private _context: WebPartContext) {
         Handlebars.registerHelper('splitDisplayNames', this._splitDisplayNames);
         Handlebars.registerHelper('splitSPUser', this._splitSPUser);
@@ -15,6 +17,10 @@ export default class HBSharePointHelpers {
         Handlebars.registerHelper('returnMonthName', this._returnMonthName);
         Handlebars.registerHelper('evenRow', this._evenRow);
         Handlebars.registerHelper('currentWebUrl', this._currentWebUrl);
+        Handlebars.registerHelper('getDocumentIcon', this._getDocumentIcon);
+
+
+
     }
 
     /**
@@ -49,11 +55,13 @@ export default class HBSharePointHelpers {
 
         const retValue: string[] = [];
         let userFieldValueArray = userFieldValue.split(';').forEach(user => {
-            let userValues = user.split(' | ');
+            let userValues = user.split('|');
             let spuser: ISPUser = {
-                displayName: userValues[1],
-                email: userValues[0]
+                displayName: userValues[1].trim(),
+                email: userValues[0].trim(),
+                username: userValues[4]
             };
+            console.log(userValues);
             retValue.push(spuser[propertyRequested]);
         });
 
@@ -102,30 +110,52 @@ export default class HBSharePointHelpers {
     private _returnMonthName = (date) => {
 
         var parsedate = new Date(date);
+        var offset = moment().utcOffset();
+        // var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        //     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        // ];
 
-        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-        ];
-        var month = monthNames[parsedate.getMonth()];
+        var month = moment.utc(date).utcOffset(offset).format('MMM');
 
         return month;
     }
+
     private _returnday = (date) => {
 
         var parsedate = new Date(date);
+        var offset = moment().utcOffset();
 
-        var day = parsedate.getDate();
+        return moment.utc(date).utcOffset(offset).format('D');
 
-        return day;
     }
     private _evenRow = (rowNumber) => {
         if (rowNumber % 2 == 0) { return '20px;'; }
         else { return '0;'; }
     }
     private _currentWebUrl = (path) => {
-        let res = window.location.href.substring(0,window.location.href.indexOf("/SitePages/"));
+        let res = window.location.href.substring(0, window.location.href.indexOf("/SitePages/"));
 
         return res;
     }
+    private _getDocumentIcon = (siteUrl, fileName) => {
+
+        var url = siteUrl + "/_api/web/maptoicon(filename='" + fileName + "',progid='',size=0)";
+
+        $.ajax({
+            url: url,
+            async: true,
+            dataType: 'json'
+        }).then((data) => {
+            var iconurl = siteUrl + "/_layouts/15/images/" + data.value;
+            console.log(iconurl);
+            let jquerySelect = "[id='" + fileName +"-documentIcon']";
+            console.log(jquerySelect);
+
+            $(jquerySelect).attr('src', '' + iconurl + '');
+        });
+
+    }
+
+
 
 }

@@ -7,7 +7,10 @@ import {
     IPropertyPaneConfiguration,
     PropertyPaneTextField,
     PropertyPaneToggle,
-    PropertyPaneSlider
+    PropertyPaneSlider,
+    PropertyPaneDropdown,
+    IPropertyPaneDropdownOption,
+
 } from '@microsoft/sp-webpart-base';
 
 import * as strings from 'searchVisualizerStrings';
@@ -15,10 +18,15 @@ import SearchVisualizer from './components/SearchVisualizer';
 import { ISearchVisualizerProps } from './components/ISearchVisualizerProps';
 import { ISearchVisualizerWebPartProps } from './ISearchVisualizerWebPartProps';
 import { SPComponentLoader } from '@microsoft/sp-loader';
+import { IODataList } from '@microsoft/sp-odata-types';
+import { SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http';
+import { ISearchResults, IRefinementResult, IPrimaryQueryResult } from './services/ISearchService';
 
 export default class SearchVisualizerWebPart extends BaseClientSideWebPart<ISearchVisualizerWebPartProps> {
     private personalizedPropertyDisabled: boolean = true;
     private managedPropertyDisabled: boolean = true;
+    private dropdownOptions: IPropertyPaneDropdownOption[];
+private propertiesFetched: boolean;
     constructor() {
         super();
 
@@ -61,6 +69,14 @@ export default class SearchVisualizerWebPart extends BaseClientSideWebPart<ISear
     }
 
     protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
+        if (!this.propertiesFetched) {
+            this.fetchManagedProperties().then((response) => {
+              this.dropdownOptions = response;
+              this.propertiesFetched = true;
+              // now refresh the property pane, now that the promise has been resolved..
+              this.onDispose();
+            });
+         }
         return {
             pages: [
                 {
@@ -106,9 +122,10 @@ export default class SearchVisualizerWebPart extends BaseClientSideWebPart<ISear
                                     disabled: this.personalizedPropertyDisabled
 
                                 }),
-                                PropertyPaneTextField('managedProperty', {
+                                PropertyPaneDropdown('managedProperty', {
                                     label: strings.ManagedPropertyFieldLabel,
-                                    disabled: this.managedPropertyDisabled
+                                    disabled: this.managedPropertyDisabled,
+                                    options: this.dropdownOptions
 
                                 })
                             ],
@@ -204,4 +221,38 @@ export default class SearchVisualizerWebPart extends BaseClientSideWebPart<ISear
             this.managedPropertyDisabled = !newValue;
         }
     }
+    private fetchManagedProperties(): Promise<IPropertyPaneDropdownOption[]> {
+        var url = this.context.pageContext.web.absoluteUrl + "/_api/search/query?querytext='*'&refiners='managedproperties(filter=600/0/*)'";
+
+        return this.fetchProps(url).then((response) => {
+            var options: Array<IPropertyPaneDropdownOption> = new Array<IPropertyPaneDropdownOption>();
+
+                console.log('Found properties');
+               // console.log(response.PrimaryQueryResult);
+                console.log(response);
+                let refinementResultsRows = response.RawSearchResults.RelevantResults.RefinementResults;
+
+              //  options.push( { key:response.FilterName , text: response.Values[0].RefinementValue });
+
+
+
+            return options;
+        });
+
+      }
+      private fetchProps(url: string) : Promise<any> {
+        return this.context.spHttpClient.get(url, SPHttpClient.configurations.v1, {
+            headers: {
+                "Accept": "application/json;odata=nometadata",
+                'odata-version': '3.0'
+            }
+        }).then((res: SPHttpClientResponse) => {
+            var result = res.json();
+
+        }).catch(error => {
+            return Promise.reject(JSON.stringify(error));
+        });
+    }
+
+
 }

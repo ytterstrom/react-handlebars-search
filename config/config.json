@@ -10,9 +10,12 @@
         }
     },
     "externals": {
-        "moment": "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment-with-locales.min.js"
+        "moment": "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment-with-locales.min.js",
+        "jquery": "https://code.jquery.com/jquery-2.2.4.js"
     },
     "localizedResources": {
         "searchVisualizerStrings": "src/webparts/searchVisualizer/loc/{locale}.js"
+
     }
+
 }

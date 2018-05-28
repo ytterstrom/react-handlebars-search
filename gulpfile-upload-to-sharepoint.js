@@ -6,12 +6,11 @@ const spsync = require('gulp-spsync-creds').sync;
 
 const environmentInfo = {
 
-
-    "username": "Consid_Adm_2@elofhanssonab.onmicrosoft.com",
+    "username": "thyt@sorab365.onmicrosoft.com",
     "password": "Linn2004",
-    "tenant": "elofhanssonab",
+    "tenant": "Sorab365",
     "cdnSite": "/",
-    "cdnLib": "ClientSideAssets/React Search Handler"
+    "cdnLib": "SiteAssets/React Search Handler"
 }
 
 build.task('upload-to-sharepoint', {

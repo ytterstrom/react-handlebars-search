@@ -1,9 +1,10 @@
 import { ISearchResults, ICells, ICellValue, ISearchResponse } from './ISearchService';
 import { SPHttpClient, SPHttpClientConfiguration, SPHttpClientResponse,
     ISPHttpClientConfiguration } from '@microsoft/sp-http';
-import { IWebPartContext } from '@microsoft/sp-webpart-base';
+import { IWebPartContext, IPropertyPaneDropdownOption } from '@microsoft/sp-webpart-base';
 import SearchTokenHelper from "../helpers/SearchTokenHelper";
 import pnp from 'sp-pnp-js';
+import { IODataList } from '@microsoft/sp-odata-types';
 
 export default class SearchService {
     private _tokenHelper: SearchTokenHelper;
@@ -97,6 +98,7 @@ export default class SearchService {
                             if (typeof res.PrimaryQueryResult.RelevantResults.Table !== 'undefined') {
                                 if (typeof res.PrimaryQueryResult.RelevantResults.Table.Rows !== 'undefined') {
                                     resultsRetrieved = true;
+
                                     this._setSearchResults(res.PrimaryQueryResult.RelevantResults.Table.Rows, fields.join(','));
                                 }
                             }
@@ -187,4 +189,29 @@ export default class SearchService {
     private _isNull(value: any): boolean {
         return value === null || typeof value === "undefined";
     }
+    private fetchManagedProperties(): Promise<IPropertyPaneDropdownOption[]> {
+        var url = this._context.pageContext.web.absoluteUrl + `_api/search/query?querytext='*'&refiners='managedproperties(filter=600/0/*)`;
+
+        return this.fetchProps(url).then((response) => {
+            var options: Array<IPropertyPaneDropdownOption> = new Array<IPropertyPaneDropdownOption>();
+            response.value.map((list: IODataList) => {
+                console.log("Found list with title = " + list.Title);
+                options.push( { key: list.Id, text: list.Title });
+            });
+
+            return options;
+        });
+
+      }
+      private fetchProps(url: string) : Promise<any> {
+        return this._context.spHttpClient.get(url, SPHttpClient.configurations.v1).then((response: SPHttpClientResponse) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            console.log("WARNING - failed to hit URL " + url + ". Error = " + response.statusText);
+            return null;
+          }
+        });
+    }
+
 }

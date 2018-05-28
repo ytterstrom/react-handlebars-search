@@ -4,13 +4,24 @@ const gulp = require('gulp');
 const build = require('@microsoft/sp-build-web');
 const spsync = require('gulp-spsync-creds').sync;
 
+// const environmentInfo = {
+//     "username": "thyt@sorab365.onmicrosoft.com",
+//     "password": "Linn2004",
+//     "tenant": "Sorab365",
+//     "catalogSite": "/sites/appcatalog"
+// }
+// const environmentInfo = {
+//     "username": "Consid_Adm_2@elofhanssonab.onmicrosoft.com",
+//     "password": "Linn2004",
+//     "tenant": "elofhanssonab",
+//     "catalogSite": "/sites/appcatalog"
+// }
 const environmentInfo = {
-    "username": "Consid_Adm_2@elofhanssonab.onmicrosoft.com",
-    "password": "Linn2004",
-    "tenant": "elofhanssonab",
-    "catalogSite": "sites/appcatalog"
+    "username": "conthyt@returpack.se",
+    "password": "Linn20040204",
+    "tenant": "returpack",
+    "catalogSite": "/sites/ledningsystem"
 }
-
 
 build.task('upload-app-pkg', {
     execute: (config) => {

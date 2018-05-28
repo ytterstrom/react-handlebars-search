@@ -11,7 +11,22 @@ export interface IRelevantResults {
     TotalRows: number;
     TotalRowsIncludingDuplicates: number;
 }
+export interface IRefinementResult {
+    FilterName: string;
+    Values: IRefinementValue[];
+}
 
+export interface IRefinementValue {
+    RefinementCount: number;
+    RefinementName: string;
+    RefinementToken: string;
+    RefinementValue: string;
+}
+
+export interface IRefinementFilter {
+    FilterName: string;
+    Value: IRefinementValue;
+}
 export interface ITable {
     Rows: Array<ICells>;
 }

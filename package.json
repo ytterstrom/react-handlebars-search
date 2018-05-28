@@ -8,9 +8,9 @@
   "dependencies": {
     "@microsoft/sp-core-library": "~1.4.1",
     "@microsoft/sp-webpart-base": "~1.4.1",
+    "@pnp/spfx-property-controls": "^1.4.2",
     "@types/handlebars": "4.0.33",
-    "react": "15.6.2",
-    "react-dom": "15.6.2",
+    "@types/jquery": "^3.3.1",
     "@types/react": "15.6.6",
     "@types/react-dom": "15.5.6",
     "@types/webpack-env": ">=1.12.1 <1.14.0",
@@ -19,6 +19,8 @@
     "handlebars-helpers": "0.8.2",
     "moment": "~2.20.1",
     "node-sppkg-deploy": "^1.2.0",
+    "react": "15.6.2",
+    "react-dom": "15.6.2",
     "sp-pnp-js": "^3.0.6",
     "uuid": "3.1.0"
   },

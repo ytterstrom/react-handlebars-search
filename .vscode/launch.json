@@ -8,7 +8,7 @@
             "name": "Local workbench",
             "type": "chrome",
             "request": "launch",
-            "url": "https://localhost:4321/temp/workbench.html",
+            "url": "https://spfx:4321/temp/workbench.html",
             "webRoot": "${workspaceRoot}",
             "sourceMaps": true,
             "sourceMapPathOverrides": {
@@ -24,7 +24,8 @@
             "name": "Hosted workbench",
             "type": "chrome",
             "request": "launch",
-            "url": "https://elofhanssonab.sharepoint.com/_layouts/workbench.aspx",
+            // "url": "https://elofhanssonab.sharepoint.com/_layouts/workbench.aspx",
+            "url": "https://sorab365.sharepoint.com/_layouts/workbench.aspx",
             "webRoot": "${workspaceRoot}",
             "sourceMaps": true,
             "sourceMapPathOverrides": {

@@ -3,12 +3,18 @@
 const build = require('@microsoft/sp-build-web');
 const sppkgDeploy = require('node-sppkg-deploy');
 
+// const environmentInfo = {
+//   "username": "thyt@sorab365.onmicrosoft.com",
+//   "password": "Linn2004",
+//   "tenant": "Sorab365",
+//   "catalogSite": "sites/appcatalog"
+// };
 const environmentInfo = {
-  "username": "conthyt@returpack.se",
-  "password": "Linn20040204",
-  "tenant": "returpack",
-  "catalogSite": "sites/appcatalog"
-};
+    "username": "Consid_Adm_2@elofhanssonab.onmicrosoft.com",
+    "password": "Linn2004",
+    "tenant": "elofhanssonab",
+    "catalogSite": "sites/appcatalog"
+  };
 
 build.task('deploy-sppkg', {
     execute: (config) => {
